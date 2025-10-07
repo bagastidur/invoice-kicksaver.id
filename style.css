@@ -1,0 +1,153 @@
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+.bg-sky-blue-light { 
+    background-color: #EBF8FF; 
+}
+
+.bg-sky-blue { 
+    background-color: #87CEEB; 
+}
+
+.text-dark-blue { 
+    color: #003366; 
+}
+
+.border-dark-blue { 
+    border-color: #003366; 
+}
+
+/* Style untuk input agar terlihat menyatu */
+.editable {
+    border: 1px dashed #cbd5e1;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: border-color 0.3s;
+}
+
+.editable:focus {
+    outline: none;
+    border-color: #003366;
+    border-style: solid;
+}
+
+/* BARU: Menambahkan gaya untuk dropdown agar seragam */
+select.editable {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+}
+/* Akhir gaya baru */
+
+/* BARU: Gaya untuk galeri foto */
+.photo-wrapper {
+    position: relative;
+}
+
+.photo-thumbnail {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid #e2e8f0;
+}
+
+.remove-photo-btn {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: rgba(239, 68, 68, 0.9); /* Merah dengan sedikit transparansi */
+    color: white;
+    border: 2px solid white;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.remove-photo-btn:hover {
+    transform: scale(1.1);
+}
+
+
+/* Sembunyikan elemen yang tidak perlu saat dicetak */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+    .editable {
+        border: none;
+        padding: 4px 0;
+    }
+    body {
+        padding: 0;
+        font-size: 10pt; /* Perkecil ukuran font dasar saat cetak */
+    }
+    .max-w-4xl {
+        box-shadow: none !important;
+        width: 100%; /* Memastikan invoice memakai lebar penuh kertas */
+        margin: 0;
+        border: none;
+    }
+
+    /* Aturan untuk membuat tata letak lebih ringkas */
+    header, main, footer {
+        padding: 20px !important;
+    }
+
+    header img {
+        height: 60px !important;
+        width: 60px !important;
+    }
+
+    h1 {
+        font-size: 22pt !important;
+    }
+
+    h2 {
+        font-size: 18pt !important;
+    }
+    
+    section {
+        margin-bottom: 20px !important;
+    }
+
+    table th, table td {
+        padding: 8px !important;
+    }
+
+    /* Aturan untuk cetak foto */
+    #photoDocumentationSection.no-print-if-empty {
+        display: none !important;
+    }
+
+    #photoPreviewContainer {
+        border: 1px solid #ccc !important;
+        padding: 10px !important;
+        page-break-inside: avoid;
+    }
+
+    .photo-thumbnail {
+        height: 80px !important; /* Batasi tinggi foto agar tidak memakan banyak tempat */
+        width: 80px !important;
+    }
+    
+    /* Paksa browser untuk mencetak warna latar belakang */
+    .bg-sky-blue {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+}
+
+

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Interaktif - KickSaver.ID</title>
+    <!-- Menghubungkan ke file CSS eksternal -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Memuat font dan Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-100 p-4 sm:p-8">
+
+    <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+        
+        <header class="bg-sky-blue text-dark-blue p-8 sm:p-10 flex items-center space-x-6">
+            <img src="logo-kicksaverid.png" alt="Logo KickSaver.ID" class="h-24 w-24 rounded-full object-cover border-4 border-white shadow-md">
+            <div>
+                <h1 class="text-4xl font-bold">KickSaver.ID</h1>
+                <p class="mt-1 text-lg">Your Kicks Deserve a Glow Up!</p>
+            </div>
+        </header>
+
+        <main class="p-8 sm:p-10">
+            <section class="flex flex-col sm:flex-row justify-between mb-10">
+                <div class="mb-6 sm:mb-0">
+                    <h2 class="text-dark-blue text-4xl font-bold mb-2">INVOICE</h2>
+                    <div class="text-gray-600 space-y-1">
+                        <p><strong>No. Invoice:</strong> <input type="text" class="editable w-40" value="INV-20250918-001"></p>
+                        <p><strong>Tanggal Terbit:</strong> <input type="date" id="issueDate" class="editable w-40"></p>
+                        <p><strong>Jatuh Tempo:</strong> <input type="date" id="dueDate" class="editable w-40"></p>
+                    </div>
+                </div>
+                <div class="text-left sm:text-right">
+                    <h3 class="font-semibold text-gray-800 mb-2">Ditagihkan kepada:</h3>
+                    <div class="text-gray-600 space-y-1">
+                        <input type="text" id="customerName" class="editable w-full sm:w-64 text-left sm:text-right font-bold text-lg" placeholder="Nama Pelanggan" value="Budi Santoso">
+                        <input type="text" class="editable w-full sm:w-64 text-left sm:text-right" placeholder="Alamat Pelanggan" value="Jl. Pahlawan No. 45, Malang">
+                        <input type="text" class="editable w-full sm:w-64 text-left sm:text-right" placeholder="No. Telepon" value="0812-3456-7890">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bagian Unggah Foto -->
+            <section class="mb-10" id="photoDocumentationSection">
+                <h4 class="font-semibold text-dark-blue mb-2">Dokumentasi Foto (Sebelum Dicuci)</h4>
+                <div class="mt-2 p-4 border-2 border-dashed border-gray-300 rounded-lg">
+                    <div id="photoPreviewContainer" class="flex flex-wrap gap-4">
+                        <!-- Pratinjau foto akan muncul di sini -->
+                    </div>
+                    <div id="uploadPlaceholder" class="text-center py-4">
+                        <p class="text-gray-500">Belum ada foto yang diunggah.</p>
+                    </div>
+                    <label for="photoUpload" class="no-print mt-4 inline-block bg-gray-200 text-gray-700 font-semibold py-2 px-4 rounded-lg hover:bg-gray-300 transition-colors cursor-pointer">
+                        Pilih Foto...
+                    </label>
+                    <input type="file" id="photoUpload" class="hidden" accept="image/*" multiple>
+                </div>
+            </section>
+            <!-- Akhir Bagian Unggah Foto -->
+
+            <section class="mb-10">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left rounded-lg overflow-hidden" id="serviceTable">
+                        <thead class="bg-sky-blue text-dark-blue">
+                            <tr>
+                                <th class="p-4 font-semibold">Deskripsi Layanan</th>
+                                <th class="p-4 font-semibold text-center w-24">Jumlah</th>
+                                <th class="p-4 font-semibold text-right w-40">Harga Satuan</th>
+                                <th class="p-4 font-semibold text-right w-40">Total</th>
+                                <th class="p-4 font-semibold text-center no-print w-12"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="serviceTableBody">
+                            <!-- Baris akan ditambahkan oleh JavaScript -->
+                        </tbody>
+                    </table>
+                    <button id="addServiceBtn" class="no-print mt-4 bg-gray-200 text-gray-700 font-semibold py-2 px-4 rounded-lg hover:bg-gray-300 transition-colors">
+                        (+) Tambah Layanan
+                    </button>
+                </div>
+            </section>
+
+            <section class="flex flex-col sm:flex-row justify-between items-start">
+                <div class="mb-6 sm:mb-0 w-full sm:w-1/2">
+                     <h4 class="font-semibold text-dark-blue mb-2">Metode Pembayaran:</h4>
+                     <div class="flex space-x-6 mb-4 no-print">
+                         <label class="flex items-center space-x-2 cursor-pointer"><input type="radio" name="paymentMethod" value="cash" class="form-radio" checked> <span>Cash</span></label>
+                         <label class="flex items-center space-x-2 cursor-pointer"><input type="radio" name="paymentMethod" value="qris" class="form-radio"> <span>QRIS</span></label>
+                         <label class="flex items-center space-x-2 cursor-pointer"><input type="radio" name="paymentMethod" value="transfer" class="form-radio"> <span>Transfer Bank</span></label>
+                     </div>
+                     <div id="paymentDetails" class="text-gray-600 text-sm mb-6">
+                        <div id="cashDetails"><p>Pembayaran tunai dilakukan di kasir.</p></div>
+                        <div id="qrisDetails" class="hidden"><p><strong>QRIS:</strong> Silakan scan QR code di kasir.</p></div>
+                        <div id="transferDetails" class="hidden"><p><strong>Transfer Bank:</strong> Bank Mandiri - 1440021240905 (a.n. Bagas Agung)</p></div>
+                     </div>
+                </div>
+                <div class="w-full sm:w-2/5">
+                    <div class="text-right space-y-2 text-gray-700">
+                        <div class="flex justify-between">
+                            <span>Subtotal:</span>
+                            <span id="subtotal">Rp 0</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span>Diskon:</span>
+                            <input type="number" id="discount" class="editable w-24 text-right" value="0" placeholder="0">
+                        </div>
+                        <hr class="border-gray-300 my-2">
+                        <div class="flex justify-between items-center text-dark-blue font-bold text-2xl">
+                            <span>TOTAL:</span>
+                            <span id="totalAmount">Rp 0</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <footer class="border-t-4 border-dark-blue mt-10 p-8 text-center text-gray-500">
+            <p class="font-semibold mb-2">Terima kasih telah mempercayakan kebersihan sepatu Anda kepada kami!</p>
+            <p class="text-sm">Jl. Karyawiguna | 0896-7700-1738 | IG: @kicksaver.id</p>
+        </footer>
+
+    </div>
+
+    <!-- Menghubungkan ke file JavaScript eksternal -->
+    <script src="script.js"></script>
+</body>
+</html>
+
