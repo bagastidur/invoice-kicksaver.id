@@ -125,6 +125,11 @@ select.editable {
         display: none !important;
     }
 
+    /* BARU: Sembunyikan checkbox pada saat mencetak, tapi biarkan labelnya terlihat */
+    .addon-item input[type="checkbox"] {
+        display: none !important;
+    }
+
     .editable {
         border: none;
         padding: 4px 0;
