@@ -2,19 +2,26 @@
 // EDIT DAFTAR LAYANAN UTAMA ANDA DI SINI
 const availableServices = [
     { name: 'Pilih Layanan...', price: 0 },
-    { name: 'Deep Clean - Sneakers Suede', price: 55000 },
-    { name: 'Deep Clean - Sneakers Canvas', price: 45000 },
-    { name: 'Water Repellent Coating', price: 30000 },
-    { name: 'Unyellowing Treatment', price: 35000 },
-    { name: 'Repaint Midsole', price: 75000 },
-    { name: 'Jahit Sepatu', price: 25000 }
+    { name: 'Outer Clean', price: 25000 },
+    { name: 'Deep Clean', price: 35000 },
+    { name: 'Leather Care', price: 40000 },
+    { name: 'Flat Shoes', price: 25000 },
+    { name: 'Kids Shoes', price: 25000 },
+    { name: 'Sandal', price: 20000 }
+    { name: 'Deep Clean - Topi', price: 20000 },
+    { name: 'Deep Clean - Dompet', price: 20000 },
+    { name: 'Deep Clean - Small Bag', price: 25000 },
+    { name: 'Deep Clean - Medium Bag', price: 35000 },
+    { name: 'Deep Clean - Large Bag', price: 50000 },
+    { name: 'Deep Clean - Half Face Helmet', price: 25000 }
+    { name: 'Deep Clean - Full Face Helmet', price: 30000 }
 ];
 
 // EDIT DAFTAR LAYANAN TAMBAHAN (ADD-ONS) ANDA DI SINI
 const availableAddons = [
-    { name: 'One-day Service (Express)', price: 20000 },
-    { name: 'Antar Jemput', price: 15000 },
-    { name: 'Lace Cleaning', price: 5000 }
+    { name: 'One-day Service (24 Jam)', price: 10000 },
+    { name: 'Unyellowing', price: 15000 },
+    { name: 'Whitening', price: 20000 }
 ];
 // ------------------------------------
 
@@ -112,7 +119,6 @@ function createServiceRow(selectedService = 'Pilih Layanan...', quantity = 1) {
 }
 
 function handlePaymentMethodChange() {
-    // ... (fungsi ini tidak berubah)
     const selectedMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
     document.getElementById('cashDetails').classList.toggle('hidden', selectedMethod !== 'cash');
     document.getElementById('qrisDetails').classList.toggle('hidden', selectedMethod !== 'qris');
@@ -120,7 +126,6 @@ function handlePaymentMethodChange() {
 }
 
 function checkPhotoPlaceholder() {
-    // ... (fungsi ini tidak berubah)
     if (photoPreviewContainer.children.length > 0) {
         uploadPlaceholder.classList.add('hidden');
         photoDocumentationSection.classList.remove('no-print-if-empty');
@@ -139,7 +144,6 @@ document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
 });
 
 photoUpload.addEventListener('change', event => {
-    // ... (fungsi ini tidak berubah)
     for (const file of event.target.files) {
         if (file) {
             const reader = new FileReader();
@@ -167,9 +171,32 @@ photoUpload.addEventListener('change', event => {
     event.target.value = '';
 });
 
+// BARU: Fungsi untuk mempersiapkan halaman sebelum dicetak
+function prepareForPrint() {
+    // Sembunyikan add-ons yang tidak dicentang
+    document.querySelectorAll('.addon-checkbox').forEach(checkbox => {
+        if (!checkbox.checked) {
+            // cari parent terdekatnya dengan class .addon-item dan tambahkan class hide-on-print
+            checkbox.closest('.addon-item').classList.add('hide-on-print');
+        }
+    });
+}
+
+// BARU: Fungsi untuk membersihkan halaman setelah dicetak
+function cleanupAfterPrint() {
+    // Tampilkan kembali semua add-ons dengan menghapus class hide-on-print
+    document.querySelectorAll('.addon-item').forEach(item => {
+        item.classList.remove('hide-on-print');
+    });
+}
+
+// BARU: Event listener yang dijalankan sebelum dan sesudah proses cetak
+window.addEventListener('beforeprint', prepareForPrint);
+window.addEventListener('afterprint', cleanupAfterPrint);
+
+
 // --- Inisialisasi Halaman ---
 function initializeDates() {
-    // ... (fungsi ini tidak berubah)
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('issueDate').value = today;
     const tomorrow = new Date();
