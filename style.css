@@ -44,7 +44,7 @@ select.editable {
     padding-right: 2.5rem;
 }
 
-/* BARU: Gaya untuk input deskripsi, add-ons, dan lainnya */
+/* Gaya untuk input deskripsi, add-ons, dan lainnya */
 .manual-description {
     margin-top: 8px;
     font-size: 0.9em;
@@ -120,7 +120,7 @@ select.editable {
         display: none !important;
     }
 
-    /* BARU: Kelas ini digunakan oleh JavaScript untuk menyembunyikan elemen saat mencetak */
+    /* Kelas ini digunakan oleh JavaScript untuk menyembunyikan elemen saat mencetak */
     .hide-on-print {
         display: none !important;
     }
@@ -176,5 +176,4 @@ select.editable {
         print-color-adjust: exact;
     }
 }
-
 
