@@ -125,8 +125,10 @@ select.editable {
         display: none !important;
     }
 
-    /* BARU: Sembunyikan checkbox pada saat mencetak, tapi biarkan labelnya terlihat */
+    /* Sembunyikan checkbox pada saat mencetak, tapi biarkan labelnya terlihat */
     .addon-item input[type="checkbox"] {
+        appearance: none; /* BARU: Perintah agar browser tidak memakai gaya default */
+        -webkit-appearance: none; /* Untuk kompatibilitas browser lama */
         display: none !important;
     }
 
@@ -169,16 +171,5 @@ select.editable {
     }
     #photoPreviewContainer {
         border: 1px solid #ccc !important;
-        padding: 10px !important;
-        page-break-inside: avoid;
-    }
-    .photo-thumbnail {
-        height: 80px !important;
-        width: 80px !important;
-    }
-    .bg-sky-blue {
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-    }
-}
+        padding: 10px !importa
 
