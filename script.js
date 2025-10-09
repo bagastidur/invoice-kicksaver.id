@@ -14,7 +14,8 @@ const availableServices = [
 	{ name: 'Deep Clean - Medium Bag', price: 35000 },
 	{ name: 'Deep Clean - Large Bag', price: 50000 },
 	{ name: 'Deep Clean - Half Face Helmet', price: 25000 },
-	{ name: 'Deep Clean - Full Face Helmet', price: 30000 }
+	{ name: 'Deep Clean - Full Face Helmet', price: 30000 },
+	{ name: 'Deep Clean - Soft Opening Promo', price: 0 }
 
 ];
 
@@ -210,4 +211,5 @@ window.addEventListener('load', () => {
     handlePaymentMethodChange();
     checkPhotoPlaceholder();
 });
+
 
