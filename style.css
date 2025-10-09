@@ -171,5 +171,16 @@ select.editable {
     }
     #photoPreviewContainer {
         border: 1px solid #ccc !important;
-        padding: 10px !importa
+        padding: 10px !important;
+        page-break-inside: avoid;
+    }
+    .photo-thumbnail {
+        height: 80px !important;
+        width: 80px !important;
+    }
+    .bg-sky-blue {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+}
 
