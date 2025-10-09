@@ -1,13 +1,20 @@
-// --- PENGATURAN MENU LAYANAN ---
-// EDIT DAFTAR LAYANAN ANDA DI SINI
+// --- PENGATURAN MENU LAYANAN & ADD-ONS ---
+// EDIT DAFTAR LAYANAN UTAMA ANDA DI SINI
 const availableServices = [
     { name: 'Pilih Layanan...', price: 0 },
-    { name: 'Outer Clean', price: 25000 },
-    { name: 'Deep Clean', price: 35000 },
-    { name: 'Unyellowing', price: 75000 },
-    { name: 'Whitening', price: 100000 },
-    { name: 'Reglue', price: 30000 },
-    { name: '+ One Day Service', price: 15000 }
+    { name: 'Deep Clean - Sneakers Suede', price: 55000 },
+    { name: 'Deep Clean - Sneakers Canvas', price: 45000 },
+    { name: 'Water Repellent Coating', price: 30000 },
+    { name: 'Unyellowing Treatment', price: 35000 },
+    { name: 'Repaint Midsole', price: 75000 },
+    { name: 'Jahit Sepatu', price: 25000 }
+];
+
+// EDIT DAFTAR LAYANAN TAMBAHAN (ADD-ONS) ANDA DI SINI
+const availableAddons = [
+    { name: 'One-day Service (Express)', price: 20000 },
+    { name: 'Antar Jemput', price: 15000 },
+    { name: 'Lace Cleaning', price: 5000 }
 ];
 // ------------------------------------
 
@@ -18,8 +25,6 @@ const addServiceBtn = document.getElementById('addServiceBtn');
 const subtotalEl = document.getElementById('subtotal');
 const totalAmountEl = document.getElementById('totalAmount');
 const discountEl = document.getElementById('discount');
-
-// Elemen Baru untuk Fitur Foto
 const photoUpload = document.getElementById('photoUpload');
 const photoPreviewContainer = document.getElementById('photoPreviewContainer');
 const uploadPlaceholder = document.getElementById('uploadPlaceholder');
@@ -37,8 +42,18 @@ function calculateTotal() {
     const rows = serviceTableBody.querySelectorAll('tr');
     rows.forEach(row => {
         const qty = parseFloat(row.querySelector('.qty').value) || 0;
-        const price = parseFloat(row.querySelector('.price').value) || 0;
-        const rowTotal = qty * price;
+        
+        const basePrice = parseFloat(row.querySelector('.service-select').options[row.querySelector('.service-select').selectedIndex].dataset.price) || 0;
+        
+        let addonsPrice = 0;
+        row.querySelectorAll('.addon-checkbox:checked').forEach(checkbox => {
+            addonsPrice += parseFloat(checkbox.dataset.price) || 0;
+        });
+
+        const unitPrice = basePrice + addonsPrice;
+        row.querySelector('.price').value = unitPrice;
+
+        const rowTotal = unitPrice * qty;
         row.querySelector('.row-total').textContent = formatCurrency(rowTotal);
         subtotal += rowTotal;
     });
@@ -54,33 +69,38 @@ function createServiceRow(selectedService = 'Pilih Layanan...', quantity = 1) {
     const tr = document.createElement('tr');
     tr.className = 'border-b border-gray-200';
 
-    let optionsHtml = '';
-    availableServices.forEach(service => {
+    // Buat Opsi Dropdown Layanan Utama
+    let serviceOptionsHtml = availableServices.map(service => {
         const isSelected = service.name === selectedService ? 'selected' : '';
-        optionsHtml += `<option value="${service.name}" data-price="${service.price}" ${isSelected}>${service.name}</option>`;
-    });
+        return `<option value="${service.name}" data-price="${service.price}" ${isSelected}>${service.name}</option>`;
+    }).join('');
+
+    // Buat Opsi Checkbox Add-ons
+    let addonsHtml = availableAddons.map(addon => `
+        <div class="addon-item">
+            <input type="checkbox" class="addon-checkbox" data-price="${addon.price}">
+            <label>${addon.name}</label>
+            <span>+ ${formatCurrency(addon.price)}</span>
+        </div>
+    `).join('');
 
     tr.innerHTML = `
-        <td class="p-4">
-            <select class="editable w-full service-select">${optionsHtml}</select>
+        <td class="p-4 align-top">
+            <select class="editable w-full service-select">${serviceOptionsHtml}</select>
+            <input type="text" class="editable w-full mt-2 manual-description" placeholder="Contoh: Nike Air Force 1 Hitam size 43...">
+            <div class="addons-container">${addonsHtml}</div>
         </td>
-        <td class="p-4"><input type="number" class="editable w-full text-center qty" value="${quantity}" min="1"></td>
-        <td class="p-4"><input type="number" class="editable w-full text-right price" value="0" min="0"></td>
-        <td class="p-4 text-right row-total">Rp 0</td>
-        <td class="p-4 text-center no-print"><button class="text-red-500 font-bold remove-btn">X</button></td>
+        <td class="p-4 align-top"><input type="number" class="editable w-full text-center qty" value="${quantity}" min="1"></td>
+        <td class="p-4 align-top"><input type="number" class="editable w-full text-right price" value="0" min="0" readonly></td>
+        <td class="p-4 align-top text-right row-total font-semibold">Rp 0</td>
+        <td class="p-4 align-top text-center no-print"><button class="text-red-500 font-bold remove-btn">X</button></td>
     `;
 
-    const selectEl = tr.querySelector('.service-select');
-    const priceEl = tr.querySelector('.price');
-
-    const updatePriceForRow = () => {
-        const selectedOption = selectEl.options[selectEl.selectedIndex];
-        const price = selectedOption.dataset.price || 0;
-        priceEl.value = price;
-        calculateTotal();
-    };
-
-    selectEl.addEventListener('change', updatePriceForRow);
+    // Tambah Event Listeners untuk baris ini
+    const updateRow = () => calculateTotal();
+    tr.querySelector('.service-select').addEventListener('change', updateRow);
+    tr.querySelector('.qty').addEventListener('input', updateRow);
+    tr.querySelectorAll('.addon-checkbox').forEach(cb => cb.addEventListener('change', updateRow));
 
     tr.querySelector('.remove-btn').addEventListener('click', () => {
         tr.remove();
@@ -88,10 +108,11 @@ function createServiceRow(selectedService = 'Pilih Layanan...', quantity = 1) {
     });
 
     serviceTableBody.appendChild(tr);
-    updatePriceForRow(); // Atur harga awal untuk baris yang baru dibuat
+    calculateTotal(); // Hitung total setelah baris baru ditambahkan
 }
 
 function handlePaymentMethodChange() {
+    // ... (fungsi ini tidak berubah)
     const selectedMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
     document.getElementById('cashDetails').classList.toggle('hidden', selectedMethod !== 'cash');
     document.getElementById('qrisDetails').classList.toggle('hidden', selectedMethod !== 'qris');
@@ -99,6 +120,7 @@ function handlePaymentMethodChange() {
 }
 
 function checkPhotoPlaceholder() {
+    // ... (fungsi ini tidak berubah)
     if (photoPreviewContainer.children.length > 0) {
         uploadPlaceholder.classList.add('hidden');
         photoDocumentationSection.classList.remove('no-print-if-empty');
@@ -108,11 +130,8 @@ function checkPhotoPlaceholder() {
     }
 }
 
-// --- Event Listeners ---
-
+// --- Event Listeners Global ---
 addServiceBtn.addEventListener('click', () => createServiceRow());
-
-serviceTableBody.addEventListener('input', calculateTotal);
 discountEl.addEventListener('input', calculateTotal);
 
 document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
@@ -120,6 +139,7 @@ document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
 });
 
 photoUpload.addEventListener('change', event => {
+    // ... (fungsi ini tidak berubah)
     for (const file of event.target.files) {
         if (file) {
             const reader = new FileReader();
@@ -147,22 +167,18 @@ photoUpload.addEventListener('change', event => {
     event.target.value = '';
 });
 
-
 // --- Inisialisasi Halaman ---
-
 function initializeDates() {
+    // ... (fungsi ini tidak berubah)
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('issueDate').value = today;
-    
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 2);
     document.getElementById('dueDate').value = tomorrow.toISOString().split('T')[0];
 }
 
 window.addEventListener('load', () => {
-    createServiceRow('Deep Clean - Sneakers Suede', 1);
-    createServiceRow('Water Repellent Coating', 1);
-    // calculateTotal() tidak perlu dipanggil di sini karena sudah dipanggil di dalam createServiceRow
+    createServiceRow(); // Cukup buat satu baris kosong saat memulai
     initializeDates();
     handlePaymentMethodChange();
     checkPhotoPlaceholder();
