@@ -75,6 +75,8 @@ select.editable {
     margin-left: auto;
     color: #718096;
     font-size: 0.9em;
+    white-space: nowrap; /* Mencegah harga pindah baris */
+    padding-left: 8px; /* Memberi jarak */
 }
 
 
@@ -127,9 +129,19 @@ select.editable {
 
     /* Sembunyikan checkbox pada saat mencetak, tapi biarkan labelnya terlihat */
     .addon-item input[type="checkbox"] {
-        appearance: none; /* BARU: Perintah agar browser tidak memakai gaya default */
-        -webkit-appearance: none; /* Untuk kompatibilitas browser lama */
+        appearance: none;
+        -webkit-appearance: none;
         display: none !important;
+    }
+
+    /* BARU: Aturan untuk memperbaiki layout deskripsi dan add-ons saat cetak */
+    .manual-description {
+        white-space: normal !important; /* Memaksa teks deskripsi untuk wrap */
+        word-break: break-word; /* Memecah kata jika terlalu panjang */
+    }
+
+    .addon-item label {
+        flex-grow: 1; /* Membiarkan label memanjang seperlunya */
     }
 
     .editable {
