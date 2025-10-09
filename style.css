@@ -119,6 +119,12 @@ select.editable {
     .no-print {
         display: none !important;
     }
+
+    /* BARU: Kelas ini digunakan oleh JavaScript untuk menyembunyikan elemen saat mencetak */
+    .hide-on-print {
+        display: none !important;
+    }
+
     .editable {
         border: none;
         padding: 4px 0;
@@ -170,4 +176,5 @@ select.editable {
         print-color-adjust: exact;
     }
 }
+
 
