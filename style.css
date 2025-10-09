@@ -32,7 +32,7 @@ body {
     border-style: solid;
 }
 
-/* BARU: Menambahkan gaya untuk dropdown agar seragam */
+/* Menambahkan gaya untuk dropdown agar seragam */
 select.editable {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -43,9 +43,42 @@ select.editable {
     background-size: 1.5em 1.5em;
     padding-right: 2.5rem;
 }
-/* Akhir gaya baru */
 
-/* BARU: Gaya untuk galeri foto */
+/* BARU: Gaya untuk input deskripsi, add-ons, dan lainnya */
+.manual-description {
+    margin-top: 8px;
+    font-size: 0.9em;
+}
+
+.addons-container {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px dashed #e2e8f0;
+}
+
+.addon-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 6px;
+    font-size: 0.9em;
+}
+
+.addon-item input {
+    margin-right: 8px;
+}
+
+.addon-item label {
+    color: #4a5568;
+}
+
+.addon-item span {
+    margin-left: auto;
+    color: #718096;
+    font-size: 0.9em;
+}
+
+
+/* Gaya untuk galeri foto */
 .photo-wrapper {
     position: relative;
 }
@@ -62,7 +95,7 @@ select.editable {
     position: absolute;
     top: -8px;
     right: -8px;
-    background-color: rgba(239, 68, 68, 0.9); /* Merah dengan sedikit transparansi */
+    background-color: rgba(239, 68, 68, 0.9);
     color: white;
     border: 2px solid white;
     border-radius: 50%;
@@ -92,62 +125,49 @@ select.editable {
     }
     body {
         padding: 0;
-        font-size: 10pt; /* Perkecil ukuran font dasar saat cetak */
+        font-size: 10pt;
     }
     .max-w-4xl {
         box-shadow: none !important;
-        width: 100%; /* Memastikan invoice memakai lebar penuh kertas */
+        width: 100%;
         margin: 0;
         border: none;
     }
-
-    /* Aturan untuk membuat tata letak lebih ringkas */
     header, main, footer {
         padding: 20px !important;
     }
-
     header img {
         height: 60px !important;
         width: 60px !important;
     }
-
     h1 {
         font-size: 22pt !important;
     }
-
     h2 {
         font-size: 18pt !important;
     }
-    
     section {
         margin-bottom: 20px !important;
     }
-
     table th, table td {
         padding: 8px !important;
+        vertical-align: top;
     }
-
-    /* Aturan untuk cetak foto */
     #photoDocumentationSection.no-print-if-empty {
         display: none !important;
     }
-
     #photoPreviewContainer {
         border: 1px solid #ccc !important;
         padding: 10px !important;
         page-break-inside: avoid;
     }
-
     .photo-thumbnail {
-        height: 80px !important; /* Batasi tinggi foto agar tidak memakan banyak tempat */
+        height: 80px !important;
         width: 80px !important;
     }
-    
-    /* Paksa browser untuk mencetak warna latar belakang */
     .bg-sky-blue {
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
     }
 }
-
 
