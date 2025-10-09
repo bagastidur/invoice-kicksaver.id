@@ -134,7 +134,7 @@ select.editable {
         display: none !important;
     }
 
-    /* BARU: Aturan untuk memperbaiki layout deskripsi dan add-ons saat cetak */
+    /* Aturan untuk memperbaiki layout deskripsi dan add-ons saat cetak */
     .manual-description {
         white-space: normal !important; /* Memaksa teks deskripsi untuk wrap */
         word-break: break-word; /* Memecah kata jika terlalu panjang */
@@ -142,6 +142,19 @@ select.editable {
 
     .addon-item label {
         flex-grow: 1; /* Membiarkan label memanjang seperlunya */
+    }
+    
+    /* PERBAIKAN: Sembunyikan ikon kalender pada input tanggal */
+    input[type="date"]::-webkit-calendar-picker-indicator {
+        display: none !important;
+    }
+
+    /* PERBAIKAN: Perbaiki perataan teks pada detail pelanggan */
+    #customerDetails {
+        text-align: right;
+    }
+    #customerDetails p {
+        text-align: right !important;
     }
 
     .editable {
