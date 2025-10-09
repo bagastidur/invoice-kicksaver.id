@@ -144,7 +144,7 @@ select.editable {
         flex-grow: 1; /* Membiarkan label memanjang seperlunya */
     }
     
-    /* PERBAIKAN: Sembunyikan ikon kalender pada input tanggal */
+    /* Sembunyikan ikon kalender pada input tanggal */
     input[type="date"]::-webkit-calendar-picker-indicator {
         display: none !important;
     }
@@ -153,7 +153,8 @@ select.editable {
     #customerDetails {
         text-align: right;
     }
-    #customerDetails p {
+    /* Aturan lebih spesifik untuk menimpa gaya "text-center" */
+    #customerName {
         text-align: right !important;
     }
 
