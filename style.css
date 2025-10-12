@@ -149,13 +149,21 @@ select.editable {
         display: none !important;
     }
 
-    /* PERBAIKAN: Perbaiki perataan teks pada detail pelanggan */
+    /* Perbaiki perataan teks pada detail pelanggan */
     #customerDetails {
         text-align: right;
     }
-    /* Aturan lebih spesifik untuk menimpa gaya "text-center" */
     #customerName {
         text-align: right !important;
+    }
+
+    /* PERBAIKAN: Hilangkan panah pada dropdown layanan saat cetak */
+    select.editable {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background-image: none; /* Hilangkan gambar panah kustom */
+        padding-right: 4px; /* Atur ulang padding */
     }
 
     .editable {
