@@ -16,14 +16,14 @@ const availableServices = [
 	{ name: 'Deep Clean - Half Face Helmet', price: 25000 },
 	{ name: 'Deep Clean - Full Face Helmet', price: 30000 },
 	{ name: 'Deep Clean - Soft Opening Promo', price: 0 }
-
 ];
 
 // EDIT DAFTAR LAYANAN TAMBAHAN (ADD-ONS) ANDA DI SINI
 const availableAddons = [
     { name: 'One-day Service (24 Jam)', price: 10000 },
     { name: 'Unyellowing', price: 15000 },
-    { name: 'Whitening', price: 20000 }
+    { name: 'Whitening', price: 20000 },
+	{ name: 'Reglue', price: 15000 }
 ];
 // ------------------------------------
 
@@ -38,6 +38,16 @@ const photoUpload = document.getElementById('photoUpload');
 const photoPreviewContainer = document.getElementById('photoPreviewContainer');
 const uploadPlaceholder = document.getElementById('uploadPlaceholder');
 const photoDocumentationSection = document.getElementById('photoDocumentationSection');
+
+// BARU: Elemen untuk alih mode
+const switchModeBtn = document.getElementById('switchModeBtn');
+const docTitle = document.getElementById('docTitle');
+const dueDateContainer = document.getElementById('dueDateContainer');
+const paymentDateContainer = document.getElementById('paymentDateContainer');
+const statusStamp = document.getElementById('statusStamp');
+
+// BARU: Variabel status mode
+let isReceiptMode = false;
 
 
 // --- Fungsi Utama ---
@@ -137,6 +147,30 @@ function checkPhotoPlaceholder() {
     }
 }
 
+// BARU: Fungsi untuk beralih mode Invoice/Receipt
+function toggleMode() {
+    isReceiptMode = !isReceiptMode;
+
+    if (isReceiptMode) {
+        // --- Ubah ke Mode Receipt ---
+        docTitle.textContent = 'RECEIPT';
+        switchModeBtn.textContent = 'Ubah ke Invoice';
+        dueDateContainer.style.display = 'none';
+        paymentDateContainer.style.display = 'block';
+        statusStamp.style.display = 'block';
+        // Set tanggal bayar ke hari ini
+        document.getElementById('paymentDate').value = new Date().toISOString().split('T')[0];
+    } else {
+        // --- Ubah ke Mode Invoice ---
+        docTitle.textContent = 'INVOICE';
+        switchModeBtn.textContent = 'Ubah ke Receipt';
+        dueDateContainer.style.display = 'block';
+        paymentDateContainer.style.display = 'none';
+        statusStamp.style.display = 'none';
+    }
+}
+
+
 // --- Event Listeners Global ---
 addServiceBtn.addEventListener('click', () => createServiceRow());
 discountEl.addEventListener('input', calculateTotal);
@@ -196,10 +230,16 @@ function cleanupAfterPrint() {
 window.addEventListener('beforeprint', prepareForPrint);
 window.addEventListener('afterprint', cleanupAfterPrint);
 
+// BARU: Event listener untuk tombol alih mode
+switchModeBtn.addEventListener('click', toggleMode);
+
+
 // --- Inisialisasi Halaman ---
 function initializeDates() {
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('issueDate').value = today;
+    document.getElementById('paymentDate').value = today; // Set tanggal bayar default
+    
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 2);
     document.getElementById('dueDate').value = tomorrow.toISOString().split('T')[0];
@@ -210,6 +250,8 @@ window.addEventListener('load', () => {
     initializeDates();
     handlePaymentMethodChange();
     checkPhotoPlaceholder();
+
+    // BARU: Atur status awal (sembunyikan elemen receipt)
+    paymentDateContainer.style.display = 'none';
+    statusStamp.style.display = 'none';
 });
-
-
