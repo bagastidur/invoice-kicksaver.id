@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invoice - KickSaver.ID</title>
+    <title>Rincian Biaya - KickSaver.ID</title>
     <!-- Menghubungkan ke file CSS eksternal -->
     <link rel="stylesheet" href="style.css">
     <!-- Memuat font dan Tailwind CSS -->
@@ -25,18 +25,24 @@
         <main class="p-8 sm:p-10">
             <section class="flex flex-col sm:flex-row justify-between mb-10">
                 <div class="mb-6 sm:mb-0">
-                    <h2 class="text-dark-blue text-4xl font-bold mb-2">INVOICE</h2>
+                    <!-- Judul dan tombol alih mode -->
+                    <div class="flex items-center justify-between mb-2">
+                        <h2 id="docTitle" class="text-dark-blue text-4xl font-bold">INVOICE</h2>
+                        <button id="switchModeBtn" class="no-print bg-gray-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors text-sm">Ubah ke Receipt</button>
+                    </div>
+                    <!-- Akhir judul dan tombol -->
                     <div class="text-gray-600 space-y-1">
-                        <p><strong>No. Invoice:</strong> <input type="text" class="editable w-40" value="INV-09102025-001"></p>
+                        <p><strong>No. Invoice:</strong> <input type="text" class="editable w-40" value="INV-20250918-001"></p>
                         <p><strong>Tanggal Terbit:</strong> <input type="date" id="issueDate" class="editable w-40"></p>
-                        <p><strong>Jatuh Tempo:</strong> <input type="date" id="dueDate" class="editable w-40"></p>
+                        <p id="paymentDateContainer"><strong>Tanggal Bayar:</strong> <input type="date" id="paymentDate" class="editable w-40"></p>
+                        <p id="dueDateContainer"><strong>Jatuh Tempo:</strong> <input type="date" id="dueDate" class="editable w-40"></p>
                     </div>
                 </div>
                 <div class="text-left sm:text-right">
                     <h3 class="font-semibold text-gray-800 mb-2">Ditagihkan kepada:</h3>
-                    <div class="text-gray-600 space-y-1">
+                    <div id="customerDetails" class="text-gray-600 space-y-1">
                         <input type="text" id="customerName" class="editable w-full sm:w-64 text-left sm:text-right font-bold text-lg" placeholder="Nama Pelanggan" value="Budi Santoso">
-                        <input type="text" class="editable w-full sm:w-xs text-left sm:text-right" placeholder="Alamat Pelanggan" value="Jl. Pahlawan No. 45, Malang">
+                        <input type="text" class="editable w-full sm:w-64 text-left sm:text-right" placeholder="Alamat Pelanggan" value="Jl. Pahlawan No. 45, Malang">
                         <input type="text" class="editable w-full sm:w-64 text-left sm:text-right" placeholder="No. Telepon" value="0812-3456-7890">
                     </div>
                 </div>
@@ -44,7 +50,7 @@
 
             <!-- Bagian Unggah Foto -->
             <section class="mb-10" id="photoDocumentationSection">
-                <h4 class="font-semibold text-dark-blue mb-2">Dokumentasi Foto Sepatu (Sebelum Dicuci)</h4>
+                <h4 class="font-semibold text-dark-blue mb-2">Dokumentasi Foto (Sebelum Dicuci)</h4>
                 <div class="mt-2 p-4 border-2 border-dashed border-gray-300 rounded-lg">
                     <div id="photoPreviewContainer" class="flex flex-wrap gap-4">
                         <!-- Pratinjau foto akan muncul di sini -->
@@ -91,12 +97,15 @@
                          <label class="flex items-center space-x-2 cursor-pointer"><input type="radio" name="paymentMethod" value="transfer" class="form-radio"> <span>Transfer Bank</span></label>
                      </div>
                      <div id="paymentDetails" class="text-gray-600 text-sm mb-6">
-                        <div id="cashDetails"><p><strong>Tunai</strong></p></div>
-                        <div id="qrisDetails" class="hidden"><p><strong>QRIS</strong></p></div>
+                        <div id="cashDetails"><p>Pembayaran tunai dilakukan di kasir.</p></div>
+                        <div id="qrisDetails" class="hidden"><p><strong>QRIS:</strong> Silakan scan QR code di kasir.</p></div>
                         <div id="transferDetails" class="hidden"><p><strong>Transfer Bank:</strong> Bank BCA - 4390833585 (a.n. Zidan Qibran)</p></div>
                      </div>
                 </div>
-                <div class="w-full sm:w-2/5">
+                <div id="totalContainer" class="w-full sm:w-2/5 relative">
+                    <!-- Stempel LUNAS akan muncul di sini -->
+                    <div id="statusStamp" class="status-stamp">LUNAS</div>
+
                     <div class="text-right space-y-2 text-gray-700">
                         <div class="flex justify-between">
                             <span>Subtotal:</span>
@@ -127,9 +136,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-
-
-
-
-
-
