@@ -115,7 +115,7 @@ select.editable {
     transform: scale(1.1);
 }
 
-/* BARU: Gaya untuk stempel "LUNAS" */
+/* Gaya untuk stempel "LUNAS" */
 .status-stamp {
     position: absolute;
     top: 50%;
@@ -136,38 +136,48 @@ select.editable {
 
 /* Sembunyikan elemen yang tidak perlu saat dicetak */
 @media print {
+    /* BARU: Tentukan ukuran halaman A4 secara eksplisit */
+    @page {
+        size: A4 portrait;
+        margin: 1.5cm; /* Atur margin kertas */
+    }
+
+    /* BARU: Reset html dan body untuk halaman cetak */
+    html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0 !important;
+        padding: 0 !important;
+        font-size: 10pt !important; /* Set dasar font untuk cetak */
+    }
+
     .no-print {
         display: none !important;
     }
 
-    /* Kelas ini digunakan oleh JavaScript untuk menyembunyikan elemen saat mencetak */
     .hide-on-print {
         display: none !important;
     }
 
-    /* Sembunyikan checkbox pada saat mencetak, tapi biarkan labelnya terlihat */
     .addon-item input[type="checkbox"] {
         appearance: none;
         -webkit-appearance: none;
         display: none !important;
     }
 
-    /* Aturan untuk memperbaiki layout deskripsi dan add-ons saat cetak */
     .manual-description {
-        white-space: normal !important; /* Memaksa teks deskripsi untuk wrap */
-        word-break: break-word; /* Memecah kata jika terlalu panjang */
+        white-space: normal !important; 
+        word-break: break-word; 
     }
 
     .addon-item label {
-        flex-grow: 1; /* Membiarkan label memanjang seperlunya */
+        flex-grow: 1; 
     }
     
-    /* Sembunyikan ikon kalender pada input tanggal */
     input[type="date"]::-webkit-calendar-picker-indicator {
         display: none !important;
     }
 
-    /* Perbaiki perataan teks pada detail pelanggan */
     #customerDetails {
         text-align: right;
     }
@@ -175,13 +185,12 @@ select.editable {
         text-align: right !important;
     }
 
-    /* Hilangkan panah pada dropdown layanan saat cetak */
     select.editable {
         -webkit-appearance: none;
         -moz-appearance: none;
         appearance: none;
-        background-image: none; /* Hilangkan gambar panah kustom */
-        padding-right: 4px; /* Atur ulang padding */
+        background-image: none; 
+        padding-right: 4px; 
     }
 
     .editable {
@@ -189,8 +198,8 @@ select.editable {
         padding: 4px 0;
     }
     body {
-        padding: 0;
-        font-size: 10pt;
+        padding: 0; /* Hapus padding default body saat cetak */
+        font-size: 10pt; /* Sudah diatur di atas, tapi pastikan lagi */
     }
     .max-w-4xl {
         box-shadow: none !important;
@@ -235,7 +244,6 @@ select.editable {
         print-color-adjust: exact;
     }
     
-    /* BARU: Pastikan stempel LUNAS terlihat saat dicetak (jika diaktifkan) */
     .status-stamp {
         color: rgba(34, 197, 94, 0.3) !important;
         border-color: rgba(34, 197, 94, 0.3) !important;
