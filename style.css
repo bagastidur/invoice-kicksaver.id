@@ -136,21 +136,31 @@ select.editable {
 
 /* Sembunyikan elemen yang tidak perlu saat dicetak */
 @media print {
-    /* BARU: Tentukan ukuran halaman A4 secara eksplisit */
+    /* 1. HAPUS 'size: A4' agar menu Scale/Paper Size di PC muncul kembali */
     @page {
-        size: A4 portrait;
-        margin: 1.5cm; /* Atur margin kertas */
+        margin: 1.5cm; 
     }
 
-    /* BARU: Reset html dan body untuk halaman cetak */
+    /* 2. TRIK KHUSUS: Paksa browser HP merender seolah-olah layar lebar (Desktop) */
     html, body {
+        min-width: 1024px !important; /* Lebar minimum standar desktop */
         width: 100%;
-        height: 100%;
         margin: 0 !important;
         padding: 0 !important;
-        font-size: 10pt !important; /* Set dasar font untuk cetak */
+        font-size: 10pt !important; 
+        /* Ini mencegah layout menjadi responsif (menumpuk) di HP */
     }
 
+    /* Pastikan container utama juga mengikuti lebar paksa ini */
+    .max-w-4xl {
+        max-width: none !important;
+        width: 100% !important;
+        box-shadow: none !important;
+        margin: 0;
+        border: none;
+    }
+
+    /* ... Kode CSS Print lainnya tetap sama ... */
     .no-print {
         display: none !important;
     }
@@ -197,16 +207,7 @@ select.editable {
         border: none;
         padding: 4px 0;
     }
-    body {
-        padding: 0; /* Hapus padding default body saat cetak */
-        font-size: 10pt; /* Sudah diatur di atas, tapi pastikan lagi */
-    }
-    .max-w-4xl {
-        box-shadow: none !important;
-        width: 100%;
-        margin: 0;
-        border: none;
-    }
+
     header, main, footer {
         padding: 20px !important;
     }
